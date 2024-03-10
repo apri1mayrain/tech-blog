@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Tidbits</title>
+  {{!-- Cirrus CSS --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cirrus-ui@0.7.2/dist/cirrus.min.css">
+  {{!-- Style.css will override Cirrus --}}
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-indigo-100">
+  <header class="header u-sticky u-top-0 bg-gray-000">
+    <div class="header-brand">
+        <div class="nav-item no-hover no-pointer">
+            <a><h6 class="title animated bounceIn">Tech Tidbits</h6></a>
+        </div>
+    </div>
+    <div class="nav-left">
+          <nav class="nav-item header-btn">
+              <a href="/" class="nav-item">Home</a>
+              <a href="/dashboard" class="nav-item">Dashboard</a>
+              {{#if loggedIn}}
+              <a id="logout" class="nav-item">Logout</a>
+              {{else}}
+              <a href="/login" class="nav-item">Login</a>
+              {{/if}}
+          </nav>
+      </div>
+  </header>
+
+  <main class="u-center">
+    {{{body}}}
+  </main>
+
+  {{#if loggedIn}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
+</body>
+
+</html>

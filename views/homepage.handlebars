@@ -1,0 +1,9 @@
+<section class="content">
+    <h1 class="u-center">Welcome to Tech Tidbits{{#if loggedIn}}, {{user}}{{/if}}</h1>
+    <h4 class="u-center">A blog for the tech community</h1>
+</section>
+<section class="grid grid-cols-3 u-gap-3 w-80p">
+    {{#each posts}}
+    {{> post-details}}
+    {{/each}}
+</section>
