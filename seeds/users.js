@@ -3,7 +3,7 @@ const { User } = require('../models');
 const users = [
   {
     username: 's0dali0n',
-    // pzwwR!ndHXV{%&#A,
+    // password: pzwwR!ndHXV{%&#A,
     password: '$2b$10$8o.CNTnUYdcaGbM15UdnTuf7jPFeqaVVbSuuwr3jW0H1F4jV5A5LW',
   },
   {

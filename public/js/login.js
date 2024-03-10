@@ -15,9 +15,11 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
       // If user is successfully authenticated, they will be redirect to the dashbaord
+      alert('Login successful.');
       document.location.replace('/dashboard');
-    } else {
-      alert('Failed to log in.');
+    } else if(response.status === 400) {
+      const resMessage = await response.json();
+      alert(resMessage.message);
     }
   }
 };

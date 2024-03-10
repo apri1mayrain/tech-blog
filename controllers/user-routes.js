@@ -3,6 +3,39 @@ const { User } = require('../models');
 
 // Signup or create new user
 router.post('/signup', async (req, res) => {
+  try {
+    const dbUser = await User.findOne({
+      where: {
+        username: req.body.username,
+      },
+    });
+
+    if (dbUser) {
+      res
+        .status(400)
+        .json({ message: 'Username already exists. Please try again!' });
+      return;
+    }
+
+    if (req.body.password.length < 8){
+      res
+        .status(400)
+        .json({ message: 'Password must be at least 8 characters. Please try again!' });
+      return;
+    }
+
+    const newUser = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+    });
+
+    res
+      .status(200)
+      .json({ user: newUser.username, message: 'You are now signed up!' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 // Login user
@@ -17,7 +50,7 @@ router.post('/login', async (req, res) => {
     if (!dbUser) {
       res
         .status(400)
-        .json({ message: 'Incorrect username. Please try again!' });
+        .json({ message: 'Account does not exist. Please try again or signup!' });
       return;
     }
 
@@ -51,6 +84,7 @@ router.post('/login', async (req, res) => {
 // Logout user
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
+    req.session.loggedIn = false;
     req.session.destroy(() => {
       res.status(204).end();
     });

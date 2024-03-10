@@ -6,10 +6,12 @@ const logout = async () => {
   });
 
   if (response.ok) {
+    alert('You have been logged out.');
     // Once user is logged out, they will be redirected to homepage
     document.location.replace('/');
-  } else {
-    alert('Failed to log out.');
+  } else if(response.status === 400) {
+    const resMessage = await response.json();
+    alert(resMessage.message);
   }
 };
 
