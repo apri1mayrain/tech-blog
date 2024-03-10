@@ -13,9 +13,11 @@ const signupFormHandler = async (event) => {
         });
 
         if (response.ok) {
-        document.location.replace('/dashboard');
-        } else {
-        alert('Failed to sign up.');
+        alert('Your account was successfully created. Please login.');
+        document.location.replace('/login');
+        } else if(response.status === 400) {
+            const resMessage = await response.json();
+            alert(resMessage.message);
         }
     }
 };

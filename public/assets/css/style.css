@@ -1,4 +1,9 @@
 /* Custom CSS */
+.content h1 {
+    margin: 1rem 6rem;
+    text-align: center;
+}
+
 .mh-250px {
     max-height: 250px;
 }
