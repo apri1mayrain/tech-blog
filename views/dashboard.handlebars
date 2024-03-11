@@ -1,0 +1,36 @@
+<section class="content mb-0">
+    <h2 class="u-center">Dashboard</h2>
+</section>
+<div class="u-center my-posts">
+    <div class="content">
+        <h3 class="u-center">My Posts</h3>
+        <button class="u-center text-indigo-500 bg-indigo-100 text-md" id="create-post-btn">Create New Post</button>
+    </div>
+    <section class="grid grid-cols-3 u-gap-3 w-80p">
+        {{#each userPosts}}
+        {{> my-posts}}
+        {{/each}}
+    </section>
+</div>
+{{!-- This div will be hidden until user clicks on new post button --}}
+<div class="create-post-form u-none u-absolute position">
+    <h1>Create New Post</h1>
+    <form>
+        <div class="mb-1">
+            <label class="font-bold" for="post-title">Title</label>
+            <div class="section-body">
+                <div class="form-group">
+                    <input type="text" class="form-group-input" id="post-title" placeholder="Write post title here" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-1">
+            <label class="font-bold">Body</label>
+            <textarea id="post-body" placeholder="Write your post here"></textarea>
+        </div>
+        <button class="form-group-btn btn-primary" type="submit">Create Post</button>
+    </form>
+</div>
+
+<script src="/js/create-post.js"></script>

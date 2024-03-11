@@ -5,35 +5,62 @@ const withAuth = require('../utils/auth');
 
 // GET posts for homepage
 router.get('/', async (req, res) => {
-    try {
-      const dbPosts = await Post.findAll({
-        include: [
-          {
-            model: User,
-            attributes: ['username'],
-          },
-        ],
-      });
+  try {
+    const dbPosts = await Post.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
 
-      const posts = dbPosts.map((post =>
-        post.get({ plain: true })
-      ));
+    const posts = dbPosts.map((post =>
+      post.get({ plain: true })
+    ));
 
-      res.render('homepage', {
-        posts,
-        loggedIn: req.session.loggedIn,
-        user: req.session.user,
-      });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  });
+    res.render('homepage', {
+      posts,
+      loggedIn: req.session.loggedIn,
+      user: req.session.user,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 // GET users posts for dashboard page
+// Only logged in users may view the dashboard
 router.get('/dashboard', withAuth, async (req, res) => {
-  res.render('/dashboard');
-})
+  try {
+    const dbUser = await User.findOne({
+      where: {
+        username: req.session.user,
+      },
+    });
+
+    const userID = dbUser.dataValues.id;
+
+    const dbUserPosts = await Post.findAll({
+      where: {
+        user_id: userID,
+      },
+    });
+
+    const userPosts = dbUserPosts.map((post =>
+      post.get({ plain: true })
+    ));
+
+    res.render('dashboard', {
+      userPosts,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 // GET login page
 router.get('/login', (req, res) => {
@@ -58,7 +85,7 @@ router.get('/signup', (req, res) => {
 });
 
 // GET specific post page
-router.get('/post:id', withAuth, async (req, res) => {
+router.get('/post/:id', async (req, res) => {
 })
 
 module.exports = router;
