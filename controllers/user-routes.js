@@ -70,6 +70,8 @@ router.post('/login', async (req, res) => {
       req.session.loggedIn = true;
       // Saves the currently logged in user
       req.session.user = req.body.username;
+      // Set users logged in session to expire in 5 minutes
+      req.session.cookie.maxAge = 300000;
 
       res
         .status(200)
