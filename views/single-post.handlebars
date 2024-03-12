@@ -1,0 +1,47 @@
+{{!-- WHEN I click on an existing blog post
+THEN I am presented with the post title, contents, post creator’s username, and date created for that post and have the option to leave a comment --}}
+<section class="grid grid-cols-1 w-50p">
+    <article class="card">
+        <div class="ml-3 mr-3 ">
+            <p class="title bottom-border">{{post.title}}</br>
+            Posted by {{post.user.username}} on {{format_date post.published_date}}</p>
+            <p class="smaller-text">{{post.body}}</p>
+        </div>
+    </article>
+    <article class="comments card">
+        <div class="ml-3 mr-3 mb-3">
+            <p class="title bottom-border">Comments</p>
+            {{#if comments}}
+            <ul class="no-bullets">
+                {{#each comments}}
+                <li>
+                    <p class="smaller-text">{{body}}</br>
+                    - {{user.username}} on {{format_date published_date}}</p>
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <p class="smaller-text u-text-center">There are no comments for this post.</br>Create a comment using the button below!</br>
+            {{/if}}
+        </div>
+        {{#if loggedIn}}
+        <div class="card__action-bar u-center">
+            <button class="u-center text-indigo-500 bg-indigo-100 text-md" id="create-comment-btn">Post Comment</button>
+        </div>
+        {{/if}}
+    </article>
+    {{!-- This div will be hidden until user clicks on post comment button --}}
+    <div class="create-comment-form u-none">
+        <form>
+            <div class="mb-1">
+                <h3>Post New Comment</h3>
+                <textarea id="comment-body" placeholder="Write your comment here"></textarea>
+            </div>
+            <button class="form-group-btn btn-primary" type="submit">Post Comment</button>
+        </form>
+    </div>
+</section>
+
+{{#if loggedIn}}
+<script src="/js/create-comment.js"></script>
+{{/if}}

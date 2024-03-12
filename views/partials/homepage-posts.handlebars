@@ -1,4 +1,4 @@
-<div class="card">
+<article class="card">
     <div class="card__container">
         <div class="card__image">
             <!-- https://unsplash.com/photos/black-ballpoint-pen-on-white-ruled-paper-sheet-vD9Gb_H7RR8 -->
@@ -7,9 +7,8 @@
     </div>
     <div class="ml-3 mr-3">
         <p class="title">{{title}}</br>
-        Posted on {{format_date published_date}}</br>
-        <a href="/post/{{id}}">Update</a> / 
-        <a href="/post/{{id}}">Delete</a></p>
+        Posted by {{user.username}} on {{format_date published_date}}<br>
+        <a href="/post/{{id}}">Read More</a></p>
         <p class="mh-250px u-overflow-y-auto">{{body}}</p>
     </div>
-</div>
+</article>

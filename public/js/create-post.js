@@ -1,4 +1,4 @@
-// Send POST response info to create new post
+// Send POST request info to create new post
 const createPostFormHandler = async (event) => {
     event.preventDefault();
 
@@ -17,9 +17,9 @@ const createPostFormHandler = async (event) => {
     const title = document.querySelector('#post-title').value.trim();
     const body = document.querySelector('#post-body').value.trim();
     
-    // Send POST response to create new post
+    // Send POST request to create new post
     if (title && body) {
-        const response = await fetch('/dashboard', {
+        const response = await fetch('/post', {
         method: 'POST',
         body: JSON.stringify({ title, body }),
         headers: { 'Content-Type': 'application/json' },

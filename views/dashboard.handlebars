@@ -6,15 +6,19 @@
         <h3 class="u-center">My Posts</h3>
         <button class="u-center text-indigo-500 bg-indigo-100 text-md" id="create-post-btn">Create New Post</button>
     </div>
+    {{#if userPosts}}
     <section class="grid grid-cols-3 u-gap-3 w-80p">
         {{#each userPosts}}
-        {{> my-posts}}
+        {{> user-posts}}
         {{/each}}
     </section>
+    {{else}}
+    <h5>You do not have any posts. Use the button above to create your first post!</h5>
+    {{/if}}
 </div>
 {{!-- This div will be hidden until user clicks on new post button --}}
 <div class="create-post-form u-none u-absolute position">
-    <h1>Create New Post</h1>
+    <h3>Create New Post</h3>
     <form>
         <div class="mb-1">
             <label class="font-bold" for="post-title">Title</label>
@@ -24,7 +28,6 @@
                 </div>
             </div>
         </div>
-
         <div class="mb-1">
             <label class="font-bold">Body</label>
             <textarea id="post-body" placeholder="Write your post here"></textarea>
