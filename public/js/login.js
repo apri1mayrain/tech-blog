@@ -1,11 +1,11 @@
-// Send POST response info to login user
+// Send POST request info to login user
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
   const username = document.querySelector('#username-login').value.trim();
   const password = document.querySelector('#password-login').value.trim();
 
-  // Send POST response to login user
+  // Send POST request to login user
   if (username && password) {
     const response = await fetch('/login', {
       method: 'POST',

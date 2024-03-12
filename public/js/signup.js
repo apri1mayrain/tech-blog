@@ -1,4 +1,4 @@
-// Send POST response to signup or create new user
+// Send POST request to signup or create new user
 const signupFormHandler = async (event) => {
     event.preventDefault();
 

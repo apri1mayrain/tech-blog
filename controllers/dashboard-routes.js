@@ -1,10 +1,12 @@
 const router = require('express').Router();
 const { Post, User } = require('../models');
-// Import the custom middleware for user authentication
+// Middleware for user authentication
 const withAuth = require('../utils/auth');
 
-// Create new post
-router.post('/', withAuth, async (req, res) => {
+// Only logged in users may view the dashboard...
+
+// GET dashboard - shows current users' posts
+router.get('/', withAuth, async (req, res) => {
     try {
         const dbUser = await User.findOne({
         where: {
@@ -14,20 +16,20 @@ router.post('/', withAuth, async (req, res) => {
 
         const userID = dbUser.dataValues.id;
 
-        const newPost = await Post.create({
-            title: req.body.title,
-            body: req.body.body,
-            published_date: `${new Date().getUTCFullYear()}-${new Date().getUTCMonth()+1}-${new Date().getDate()}`,
+        const dbUserPosts = await Post.findAll({
+        where: {
             user_id: userID,
+        },
         });
 
-        res
-            .status(200)
-            .json({ 
-                message: 'Created new post.',
-                title: newPost.title,
-                body: newPost.body,
-            });
+        const userPosts = dbUserPosts.map((post =>
+        post.get({ plain: true })
+        ));
+
+        res.render('dashboard', {
+        userPosts,
+        loggedIn: req.session.loggedIn,
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

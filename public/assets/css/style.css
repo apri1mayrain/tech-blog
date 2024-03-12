@@ -1,4 +1,8 @@
 /* Custom CSS */
+.bottom-border {
+    border-bottom: 1px solid #e9ecef;
+}
+
 .content h1 {
     margin: 1rem 6rem;
     text-align: center;
@@ -25,6 +29,13 @@ img {
 }
 
 /* Media queries for mobile responsiveness */
+@media (max-width: 1024px) {
+    /* Increase width from 50% to 80% */
+    .w-50p {
+        width: 80% !important;
+    }
+}
+
 @media (max-width: 1005px) {
     .card .card__container {
         height: 0;
@@ -58,9 +69,17 @@ img {
 }
 
 @media (max-width: 425px) {
+    /* Increase width from 50% to 90% */
+    .w-50p {
+        width: 90% !important;
+    }
     /* Go down to 1 column instead of 3 */
     .grid-cols-3 {
         --grid-template-column: repeat(1, minmax(0, 1fr));
+    }
+    /* Make p text from 1 rem to .75rem */
+    .smaller-text {
+        font-size: .75rem;
     }
 }
 
