@@ -4,7 +4,7 @@
 <div class="u-center my-posts">
     <div class="content">
         <h3 class="u-center">My Posts</h3>
-        <button class="u-center text-indigo-500 bg-indigo-100 text-md" id="create-post-btn">Create New Post</button>
+        <button class="u-center btn-link text-md" id="create-post-btn">Create New Post</button>
     </div>
     {{#if userPosts}}
     <section class="grid grid-cols-3 u-gap-3 w-80p">
@@ -29,10 +29,10 @@
             </div>
         </div>
         <div class="mb-1">
-            <label class="font-bold">Body</label>
+            <label class="font-bold" for="post-body">Body</label>
             <textarea id="post-body" placeholder="Write your post here"></textarea>
         </div>
-        <button class="form-group-btn btn-primary" type="submit">Create Post</button>
+        <button class="form-group-btn btn-success text-md" type="submit">Create Post</button>
     </form>
 </div>
 

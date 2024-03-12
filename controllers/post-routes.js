@@ -3,7 +3,7 @@ const { Post, User, Comment } = require('../models');
 // Middleware for user authentication
 const withAuth = require('../utils/auth');
 
-// GET a post by its ID
+// GET to view post
 router.get('/:id', async (req, res) => {
     try {
         // Obtain post data
@@ -46,6 +46,24 @@ router.get('/:id', async (req, res) => {
 });
 
 // Only logged in users can create/update/delete posts or post comments...
+
+// GET to edit users post
+router.get('/edit/:id', withAuth, async (req, res) => {
+    try {
+        // Obtain post data
+        const dbPost = await Post.findByPk(req.params.id);
+
+        const post = dbPost.get({ plain: true });
+        
+        res.render('edit-post', {
+            post,
+            loggedIn: req.session.loggedIn,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
 
 // POST to create new post
 router.post('/', withAuth, async (req, res) => {
@@ -93,6 +111,13 @@ router.post('/comment', withAuth, async (req, res) => {
             user_id: dbUser.dataValues.id,
             post_id: req.body.postID,
         });
+
+        res
+            .status(200)
+            .json({ 
+                message: 'Created new comment.',
+                body: newComment.body,
+            });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

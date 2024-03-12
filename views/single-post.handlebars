@@ -1,11 +1,19 @@
-{{!-- WHEN I click on an existing blog post
-THEN I am presented with the post title, contents, post creator’s username, and date created for that post and have the option to leave a comment --}}
 <section class="grid grid-cols-1 w-50p">
     <article class="card">
-        <div class="ml-3 mr-3 ">
-            <p class="title bottom-border">{{post.title}}</br>
-            Posted by {{post.user.username}} on {{format_date post.published_date}}</p>
-            <p class="smaller-text">{{post.body}}</p>
+        <div class="card__container">
+            <div class="card__image">
+                <!-- https://unsplash.com/photos/black-ballpoint-pen-on-white-ruled-paper-sheet-vD9Gb_H7RR8 -->
+                <img src="/assets/images/notes.jpg" alt="Notepad filled with handwritten notes">
+            </div>
+            <div class="card__title-container">
+                <p class="title">{{post.title}}</p>
+                <span class="subtitle">Posted by {{post.user.username}} on {{format_date post.published_date}}</span>
+            </div>
+        </div>
+        <div class="mt-3 ml-3 mr-3">
+            <div class="content">
+                <p class="smaller-text">{{post.body}}</p>
+            </div>
         </div>
     </article>
     <article class="comments card">
@@ -26,19 +34,24 @@ THEN I am presented with the post title, contents, post creator’s username, an
         </div>
         {{#if loggedIn}}
         <div class="card__action-bar u-center">
-            <button class="u-center text-indigo-500 bg-indigo-100 text-md" id="create-comment-btn">Post Comment</button>
+            <button class="u-center btn-link text-md" id="new-comment-btn" type="button">New Comment</button>
         </div>
         {{/if}}
     </article>
     {{!-- This div will be hidden until user clicks on post comment button --}}
-    <div class="create-comment-form u-none">
-        <form>
-            <div class="mb-1">
+    <div class="card">
+        <div class="create-comment-form m-3 u-none">
+            <form>
                 <h3>Post New Comment</h3>
-                <textarea id="comment-body" placeholder="Write your comment here"></textarea>
-            </div>
-            <button class="form-group-btn btn-primary" type="submit">Post Comment</button>
-        </form>
+                <div class="mb-1">
+                    <textarea id="comment-body" placeholder="Write your comment here"></textarea>
+                </div>
+                <div class="u-flex u-justify-space-between">
+                    <button class="form-group-btn btn-success text-md" type="submit">Post Comment</button>
+                    <button class="form-group-btn btn-danger text-md" id="cancel-btn" type="button">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </section>
 

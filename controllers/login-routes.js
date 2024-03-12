@@ -24,9 +24,7 @@ router.post('/login', async (req, res) => {
         if (!dbUser) {
         res
             .status(400)
-            .json({
-            message: 'Account does not exist. Please try again or signup!',
-            });
+            .json({ message: 'Account does not exist. Please try again or signup!', });
         return;
         }
 

@@ -4,11 +4,15 @@
             <!-- https://unsplash.com/photos/black-ballpoint-pen-on-white-ruled-paper-sheet-vD9Gb_H7RR8 -->
             <img src="/assets/images/notes.jpg" alt="Notepad filled with handwritten notes">
         </div>
+        <div class="card__title-container">
+            <p class="title">{{title}}</p>
+            <span class="subtitle">Posted by {{user.username}} on {{format_date published_date}}</span>
+        </div>
     </div>
-    <div class="ml-3 mr-3">
-        <p class="title">{{title}}</br>
-        Posted by {{user.username}} on {{format_date published_date}}<br>
-        <a href="/post/{{id}}">Read More</a></p>
-        <p class="mh-250px u-overflow-y-auto">{{body}}</p>
+    <div class="mt-3 ml-3 mr-3">
+        <a href="/post/{{id}}">Read More</a>
+        <div class="content">
+            <p class="smaller-text mh-250px u-overflow-y-auto">{{body}}</p>
+        </div>
     </div>
 </article>

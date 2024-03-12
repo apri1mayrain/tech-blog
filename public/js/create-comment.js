@@ -1,23 +1,21 @@
+const cancelBtn = document.querySelector('#cancel-btn');
+const commentsEl = document.querySelector('.comments');
+const commentForm = document.querySelector('.create-comment-form');
+const commentBtn = document.querySelector('#new-comment-btn');
+
+// Toggle comments and create comment elements
+const toggleElements = async (event) => { 
+    commentsEl.classList.toggle('u-none');
+    commentForm.classList.toggle('u-none');
+}
+
 // Send POST request info to create new post
 const createCommentFormHandler = async (event) => {
     event.preventDefault();
 
-    const commentsEl = document.querySelector('.comments');
-    const createCommentEl = document.querySelector('.create-comment-form');
-    // Hide comments element
-    commentsEl.classList.toggle('u-none');
-    // Show create comment element
-    createCommentEl.classList.toggle('u-none');
-
+    const body = document.querySelector('#comment-body').value.trim();
     // Get the post ID for the current page
     const postID = window.location.toString().slice(-1);
-
-    // Listen for form submission
-    document
-        .querySelector('.create-comment-form')
-        .addEventListener('submit', createCommentFormHandler);
-
-    const body = document.querySelector('#comment-body').value.trim();
     
     // Send POST request to create new comment
     if (body) {
@@ -37,6 +35,11 @@ const createCommentFormHandler = async (event) => {
     }
 }
 
-document
-    .querySelector('#create-comment-btn')
-    .addEventListener('click', createCommentFormHandler);
+// Toggle elements when new comment button is clicked
+commentBtn.addEventListener('click', toggleElements);
+
+// Toggle elements when cancel button is clicked
+cancelBtn.addEventListener('click', toggleElements);
+
+// Listen when new comment form is submitted
+commentForm.addEventListener('submit', createCommentFormHandler);
