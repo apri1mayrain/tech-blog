@@ -1,23 +1,25 @@
-<section class="content mb-0">
-    <h2 class="u-center">Dashboard</h2>
-</section>
-<div class="u-center my-posts">
-    <div class="content">
-        <h3 class="u-center">My Posts</h3>
-        <button class="u-center btn-link text-md" id="create-post-btn">Create New Post</button>
-    </div>
-    {{#if userPosts}}
-    <section class="grid grid-cols-3 u-gap-3 w-80p">
-        {{#each userPosts}}
-        {{> user-posts}}
-        {{/each}}
+<div>
+    <section class="content mb-0">
+        <h2 class="u-center">Dashboard</h2>
     </section>
-    {{else}}
-    <h5>You do not have any posts. Use the button above to create your first post!</h5>
-    {{/if}}
+    <div class="u-center my-posts">
+        <div class="content">
+            <h3 class="u-center">My Posts</h3>
+            <button class="u-center btn-link text-md" id="create-post-btn">Create New Post</button>
+        </div>
+        {{#if userPosts}}
+        <section class="grid grid-cols-3 u-gap-3 w-80p">
+            {{#each userPosts}}
+            {{> user-posts}}
+            {{/each}}
+        </section>
+        {{else}}
+        <h5>You do not have any posts. Use the button above to create your first post!</h5>
+        {{/if}}
+    </div>
 </div>
 {{!-- This div will be hidden until user clicks on new post button --}}
-<div class="create-post-form u-none u-absolute position">
+<div class="create-post-form u-none u-absolute less-position">
     <h3>Create New Post</h3>
     <form>
         <div class="mb-1">
@@ -32,7 +34,10 @@
             <label class="font-bold" for="post-body">Body</label>
             <textarea id="post-body" placeholder="Write your post here"></textarea>
         </div>
-        <button class="form-group-btn btn-success text-md" type="submit">Create Post</button>
+        <div class="u-flex u-justify-space-between">
+                    <button class="form-group-btn btn-success text-md" type="submit">Create Post</button>
+                    <button class="form-group-btn btn-danger text-md" id="cancel-btn" type="button">Cancel</button>
+                </div>
     </form>
 </div>
 

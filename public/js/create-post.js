@@ -1,22 +1,26 @@
+const cancelBtn = document.querySelector('#cancel-btn');
+const createPostBtn = document.querySelector('#create-post-btn');
+const createPostForm = document.querySelector('.create-post-form');
+const myPostsEl = document.querySelector('.my-posts');
+
+// Toggle my posts element and new post form
+const toggleElements = async (event) => { 
+    myPostsEl.classList.toggle('u-none');
+    createPostForm.classList.toggle('u-none');
+}
+
 // Send POST request info to create new post
 const createPostFormHandler = async (event) => {
-    event.preventDefault();
-
-    const myPostsEl = document.querySelector('.my-posts');
-    const createPostEl = document.querySelector('.create-post-form');
-    // Hide my posts element
-    myPostsEl.classList.toggle('u-none');
-    // Show create post element
-    createPostEl.classList.toggle('u-none');
-
-    // Listen for form submission
-    document
-        .querySelector('.create-post-form')
-        .addEventListener('submit', createPostFormHandler);
+    event.preventDefault();  
 
     const title = document.querySelector('#post-title').value.trim();
     const body = document.querySelector('#post-body').value.trim();
     
+    if(!title || !body){
+        alert('Please complete the title and body sections to submit a new post.');
+        return;
+    }
+
     // Send POST request to create new post
     if (title && body) {
         const response = await fetch('/post', {
@@ -35,6 +39,11 @@ const createPostFormHandler = async (event) => {
     }
 }
 
-document
-    .querySelector('#create-post-btn')
-    .addEventListener('click', createPostFormHandler);
+// Toggle elements when cancel button is clicked
+cancelBtn.addEventListener('click', toggleElements);
+
+// Toggle elements when new post button is clicked
+createPostBtn.addEventListener('click', toggleElements);
+
+// Listen when new post form is submitted
+createPostForm.addEventListener('submit', createPostFormHandler);
