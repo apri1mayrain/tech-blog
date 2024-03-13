@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 // Middleware for user authentication
 const withAuth = require('../utils/auth');
@@ -86,7 +87,7 @@ router.post('/', withAuth, async (req, res) => {
         res
             .status(200)
             .json({ 
-                message: 'Created new post.',
+                message: 'Successfully created new post.',
                 title: newPost.title,
                 body: newPost.body,
             });
@@ -115,7 +116,7 @@ router.post('/comment', withAuth, async (req, res) => {
         res
             .status(200)
             .json({ 
-                message: 'Created new comment.',
+                message: 'Successfully created new comment.',
                 body: newComment.body,
             });
     } catch (err) {
@@ -124,12 +125,87 @@ router.post('/comment', withAuth, async (req, res) => {
     }
 })
 
-// UPDATE post
-router.put('/edit/:id', withAuth, async (req, res) => {
-})
+// PUT to update post (title, body, or title+body)
+router.put('/update', withAuth, async (req, res) => {
+    try {
+        let updatePost;
+        // Update body ONLY
+        if(!req.body.title){
+            updatePost = await Post.update({
+                body: req.body.body,
+            },
+            {
+                where: { 
+                    id: req.body.postID,
+                }
+            });
+        }
+
+        // Update title ONLY
+        else if (!req.body.body){
+            updatePost = await Post.update({
+                title: req.body.title,
+            },
+            {
+                where: { 
+                    id: req.body.postID,
+                }
+            });
+        }
+
+        // Update title and body
+        else if (req.body.title && req.body.body) {
+            updatePost = await Post.update({
+                title: req.body.title,
+                body: req.body.body,
+            },
+            {
+                where: { 
+                    id: req.body.postID,
+                }
+            });
+        }
+
+        // Notify user post was successfully updated
+        res
+            .status(200)
+            .json({ 
+                message: 'Successfully updated post.',
+                title: updatePost.title,
+                body: updatePost.body,
+             });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
 
 // DELETE post
-router.delete('/edit/:id', withAuth, async (req, res) => {
-})
+router.delete('/delete', withAuth, async (req, res) => {
+    try {
+        const dbPost = await Post.destroy({
+            where: { id: req.body.postID }
+        });
+
+        if(!dbPost) {
+            res
+                .status(400)
+                .json({ message: 'Could not find post to delete.' });
+            return;
+        }
+
+        // Ensure the next new post ID will be set to the current max ID + 1
+        const maxPostId = await Post.max('id');
+        const nextPostId = await sequelize.query(`ALTER TABLE post AUTO_INCREMENT = ${maxPostId+1};`);
+
+        // Notify user post was successfully deleted
+        res
+            .status(200)
+            .json({ message: `Successfully deleted post.` });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
 
 module.exports = router;

@@ -16,6 +16,11 @@
     cursor: default;
 }
 
+.less-position {
+    top: 15%;
+    width: 50%;
+}
+
 .position {
     top: 30%;
     width: 50%;
@@ -29,6 +34,24 @@ img {
 }
 
 /* Media queries for mobile responsiveness */
+@media (min-width: 1735px) {
+    .u-gap-3 {
+        gap: 5rem !important;
+    }   
+}
+
+@media (min-width: 1440px) {
+    .card {
+        min-width: 16rem;
+    }
+}
+
+@media (max-width: 1439px) {
+    .card {
+        min-width: 16rem;
+    }
+}
+
 @media (max-width: 1024px) {
     /* Increase width from 50% to 80% */
     .w-50p {
