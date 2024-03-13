@@ -14,14 +14,14 @@ const PORT = process.env.PORT || 3001;
 const sess = {
   secret: `auU{,hA'US+])@A5T7~y4hk/72EF:V`,
   cookie: {
-    // Regular session expires in 60 minutes
-    maxAge: 3600000,
+    maxAge: 3600000, // Regular session expires in 60 minutes
     httpOnly: true,
     secure: false,
     sameSite: 'strict',
   },
-  resave: false,
-  saveUninitialized: true,
+  resave: true,
+  rolling: true, // Force the session identifier cookie to be set on every response (for idling)
+  saveUninitialized: false, // Cookie will not be set on a response with an uninitialized session
   store: new SequelizeStore({
     db: sequelize,
   }),
