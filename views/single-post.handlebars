@@ -29,7 +29,12 @@
                 {{/each}}
             </ul>
             {{else}}
-            <p class="smaller-text u-text-center">There are no comments for this post.</br>Create a comment using the button below!</br>
+            <p class="smaller-text u-text-center">There are no comments for this post.</br>
+                {{#if loggedIn}}
+                Create a comment using the button below!</p>
+                {{else}}
+                Please <a href="/login">login</a> to post a comment!</p>
+                {{/if}}
             {{/if}}
         </div>
         {{#if loggedIn}}
